@@ -3,15 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import { useState } from "react";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { useCart } from "@/contexts/CartContext";
 
 interface CartSidebarProps {
   open: boolean;
@@ -19,24 +11,7 @@ interface CartSidebarProps {
 }
 
 export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
-  // Temporary state for demo - will be replaced with global state
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
-  const updateQuantity = (id: string, change: number) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
-
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { items, updateQuantity, removeItem, totalAmount } = useCart();
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -44,11 +19,11 @@ export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
-            Shopping Cart ({cartItems.length})
+            Shopping Cart ({items.length})
           </SheetTitle>
         </SheetHeader>
 
-        {cartItems.length === 0 ? (
+        {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center p-8">
             <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
@@ -63,7 +38,7 @@ export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
           <>
             <ScrollArea className="flex-1 -mx-6 px-6">
               <div className="space-y-4 py-4">
-                {cartItems.map((item) => (
+                {items.map((item) => (
                   <div key={item.id} className="flex gap-4">
                     <div className="h-20 w-20 rounded-lg overflow-hidden bg-muted flex-shrink-0">
                       <img
@@ -86,7 +61,7 @@ export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
                           size="icon"
                           variant="outline"
                           className="h-7 w-7"
-                          onClick={() => updateQuantity(item.id, -1)}
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
@@ -97,7 +72,7 @@ export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
                           size="icon"
                           variant="outline"
                           className="h-7 w-7"
-                          onClick={() => updateQuantity(item.id, 1)}
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
@@ -120,7 +95,7 @@ export const CartSidebar = ({ open, onOpenChange }: CartSidebarProps) => {
               <div className="flex items-center justify-between text-lg font-semibold">
                 <span>Total</span>
                 <span className="text-primary text-2xl font-heading">
-                  ₹{total.toFixed(2)}
+                  ₹{totalAmount.toFixed(2)}
                 </span>
               </div>
               
