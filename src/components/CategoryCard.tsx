@@ -14,7 +14,7 @@ export const CategoryCard = ({ name, description, image, slug, productCount }: C
   return (
     <Link to={`/category/${slug}`}>
       <Card className="group overflow-hidden transition-all hover:shadow-glow cursor-pointer">
-        <div className="relative h-64 overflow-hidden bg-gradient-secondary">
+        <div className="relative h-64 overflow-hidden bg-gradient-secondary ">
           {image && (
             <>
               <img 
@@ -26,12 +26,12 @@ export const CategoryCard = ({ name, description, image, slug, productCount }: C
             </>
           )}
           
-          <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+          <div className="absolute inset-0 flex flex-col justify-end p-6 text-[#af4529]">
             <h3 className="text-2xl font-heading font-bold mb-2">
               {name}
             </h3>
             {description && (
-              <p className="text-sm text-white/90 mb-3 line-clamp-2">
+              <p className="text-sm text-[#fa5234ea] mb-3 line-clamp-2">
                 {description}
               </p>
             )}

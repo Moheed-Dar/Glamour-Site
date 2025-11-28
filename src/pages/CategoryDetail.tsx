@@ -66,8 +66,8 @@ export default function CategoryDetail() {
       <div className="min-h-screen flex flex-col items-center justify-center">
         <h1 className="text-4xl font-heading font-bold mb-4">Category Not Found</h1>
         <p className="text-muted-foreground mb-8">This category doesn't exist</p>
-        <Link to="/categories">
-          <Button>
+        <Link to="/categories"  >
+          <Button   >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Categories
           </Button>
@@ -93,8 +93,8 @@ export default function CategoryDetail() {
         
         <div className="container mx-auto px-4 relative">
           <Link to="/categories">
-            <Button variant="outline" className="mb-6 border-white/30 text-white hover:bg-white/10">
-              <ArrowLeft className="mr-2 h-4 w-4" />
+            <Button variant="outline" className="mb-6 border-white/30 text-black hover:bg-white/10">
+              <ArrowLeft className="mr-2 h-4 w-4 " />
               Back to Categories
             </Button>
           </Link>
