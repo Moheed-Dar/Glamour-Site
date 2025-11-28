@@ -8,6 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import { CartSidebar } from "@/components/CartSidebar";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
+import Categories from "./pages/Categories";
 import Admin from "./pages/Admin";
 import AddProduct from "./pages/AddProduct";
 import NotFound from "./pages/NotFound";
@@ -31,6 +32,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/categories" element={<Categories />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/add-product" element={<AddProduct />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
