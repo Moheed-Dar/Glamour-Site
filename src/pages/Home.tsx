@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Home() {
+  const { addItem } = useCart();
+
   // Fetch featured products
   const { data: products } = useQuery({
     queryKey: ["featured-products"],
@@ -38,8 +40,13 @@ export default function Home() {
     },
   });
 
-  const handleAddToCart = (productName: string) => {
-    toast.success(`${productName} added to cart!`);
+  const handleAddToCart = (product: any) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      image: product.image_url || "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500",
+    });
   };
 
   return (
@@ -72,7 +79,7 @@ export default function Home() {
                 image={product.image_url || "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500"}
                 category={product.category_id}
                 isFeatured={product.is_featured}
-                onAddToCart={() => handleAddToCart(product.name)}
+                onAddToCart={() => handleAddToCart(product)}
               />
             ))}
           </div>
